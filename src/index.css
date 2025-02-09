@@ -106,12 +106,12 @@ tbody tr:nth-child(odd) {
 }
 
 .nav-link {
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
 }
 
 .active {
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 .table {
