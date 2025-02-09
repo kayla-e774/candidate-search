@@ -6,6 +6,10 @@ const CandidateSearch = () => {
 
   const [allUserInfo, setUserInfo] = useState<ICandidate[]>([] as ICandidate[]);
   const [currentUser, setCurrentUser] = useState<ICandidate>({} as ICandidate);
+  const [dropUser, setDropUser] = useState(false);
+  const [savedCandidates, setSavedCandidates] = useState<ICandidate[]>(
+    () => JSON.parse(localStorage.getItem('savedCandidates') ?? '[]')
+  )
   
   useEffect(() => {
     async function getUserInfo() {
@@ -27,17 +31,31 @@ const CandidateSearch = () => {
             bio: candidateInfo.bio
           };
           allInfo.push(cInfo);
+          setUserInfo(allInfo);
+          setCurrentUser(allInfo[0]);
         }
       }
-      setUserInfo(allInfo);
-      setCurrentUser(allInfo[0]);
-      console.log(allInfo);
     }
     getUserInfo();
   }, [])
 
+  useEffect(() => {
+    setCurrentUser(allUserInfo[1]);
+    setUserInfo(allUserInfo.slice(1));
+  }, [dropUser])
+
+  useEffect (() => {
+    localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates))
+  }, [savedCandidates])
+
   const handleAdd = () => {
-    
+    const newSavedCandidates = [...savedCandidates, currentUser];
+    setSavedCandidates(newSavedCandidates);
+    setDropUser(!dropUser);
+  }
+
+  const handleReject = () => {
+    setDropUser(!dropUser);
   }
 
   return (
@@ -59,11 +77,11 @@ const CandidateSearch = () => {
           </div>
           <div>
             <button onClick={handleAdd}>+</button>
-            <button>-</button>
+            <button onClick={handleReject}>-</button>
           </div>
         </>
       ) : (
-        <h3>No More Candidates Available. Retry.</h3>
+        <h3>No More Candidates Available. Refresh for more options.</h3>
       )}
     </>
   );
