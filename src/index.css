@@ -92,7 +92,7 @@ tr {
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #333333;
+  background-color: #333333 !important;
 }
 
 .nav {
@@ -118,4 +118,8 @@ tbody tr:nth-child(odd) {
 .table {
   width: 80vw;
   table-layout: fixed;
+}
+
+td {
+  word-break: break-word;
 }
