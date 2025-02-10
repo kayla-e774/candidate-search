@@ -6,7 +6,8 @@ const CandidateSearch = () => {
 
   const [allUserInfo, setUserInfo] = useState<ICandidate[]>([] as ICandidate[]);
   const [currentUser, setCurrentUser] = useState<ICandidate>({} as ICandidate);
-  const [dropUser, setDropUser] = useState(false);
+  const [dropUser, setDropUser] = useState(true);
+  const [loadingCandidates, setLoadingCandidates] = useState<boolean>(false);
   const [savedCandidates, setSavedCandidates] = useState<ICandidate[]>(
     () => JSON.parse(localStorage.getItem('savedCandidates') ?? '[]')
   )
@@ -17,6 +18,7 @@ const CandidateSearch = () => {
       const allInfo: ICandidate[] = [];
     
       for (const candidate of candidates) {
+        setLoadingCandidates(true);
         const candidateInfo = await searchGithubUser(candidate.login);
         // console.log(candidateInfo);
         if(candidateInfo) {
@@ -31,10 +33,11 @@ const CandidateSearch = () => {
             bio: candidateInfo.bio
           };
           allInfo.push(cInfo);
-          setUserInfo(allInfo);
-          setCurrentUser(allInfo[0]);
         }
       }
+      setLoadingCandidates(false);
+      setUserInfo(allInfo);
+      setCurrentUser(allInfo[0]);
     }
     getUserInfo();
   }, [])
@@ -61,7 +64,7 @@ const CandidateSearch = () => {
   return (
     <>
       <h1>Candidate Search</h1>
-      { allUserInfo.length !== 0 ? (
+      { allUserInfo.length !== 0 && currentUser ? (
         <>
           <div className="card">
             <img className="card-img-top" src={currentUser.avatarUrl} alt="profile picture"></img>
@@ -80,9 +83,15 @@ const CandidateSearch = () => {
             <button onClick={handleReject}>-</button>
           </div>
         </>
+      ) : (loadingCandidates ? (
+        <div className='container'>
+            <h3>Loading Candidates...</h3>
+        </div>
       ) : (
-        <h3>No More Candidates Available. Refresh for more options.</h3>
-      )}
+        <div className='container'>
+          <h3>No More Candidates Available. Refresh for more options.</h3>
+        </div>
+      ))}
     </>
   );
 };
