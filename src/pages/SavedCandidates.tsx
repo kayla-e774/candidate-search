@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 import ICandidate from '../interfaces/Candidate.interface';
 
+/*
+const styles = {
+  centered: {
+    text-align: 'center'
+  }
+}
+*/
+
 const SavedCandidates = () => {
   const [savedCandidates, setSavedCandidates] = useState<ICandidate[]>(
     () => JSON.parse(localStorage.getItem('savedCandidates') ?? '[]')
@@ -24,7 +32,7 @@ const SavedCandidates = () => {
           <div className="container">
             <table className="table table-striped table-dark table-bordered">
               <thead className="thead-dark">
-                <tr>
+                <tr className='text-center'>
                   <th scope="col">Image</th>
                   <th scope="col">Name</th>
                   <th scope="col">Location</th>
@@ -37,7 +45,7 @@ const SavedCandidates = () => {
               <tbody>
                 { savedCandidates.map((candidate) => (
                   <tr key={candidate}>
-                    <td>
+                    <td className="align-middle align-items-center justify-content-center text-center">
                       <img className="img-thumbnail img-fluid" src={candidate.avatarUrl}></img>
                     </td>
                     <td>
@@ -71,8 +79,8 @@ const SavedCandidates = () => {
                         ) : null
                       }
                     </td>
-                    <td>
-                      <button onClick={() => handleReject(candidate.username)}>-</button>
+                    <td className="align-middle align-items-center justify-content-center text-center">
+                      <button className="reject-btn" onClick={() => handleReject(candidate.username)}>X</button>
                     </td>
                   </tr>
                 ))}

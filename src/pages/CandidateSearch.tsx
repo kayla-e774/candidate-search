@@ -67,7 +67,7 @@ const CandidateSearch = () => {
       { allUserInfo.length !== 0 && currentUser ? (
         <>
           <div className="card">
-            <img className="card-img-top" src={currentUser.avatarUrl} alt="profile picture"></img>
+            <img className="card-img-top embed-responsive-1by1 mx-auto d-block" src={currentUser.avatarUrl} alt="profile picture"></img>
             <div className="card-body">
               <h5 className="card-title">{currentUser.username}</h5>
               {currentUser.name ? (<p className="card-text">Name: {currentUser.name}</p>): null}
@@ -79,8 +79,8 @@ const CandidateSearch = () => {
             </div>
           </div>
           <div>
-            <button onClick={handleAdd}>+</button>
             <button onClick={handleReject}>-</button>
+            <button onClick={handleAdd}>+</button>
           </div>
         </>
       ) : (loadingCandidates ? (
