@@ -7,7 +7,7 @@ const CandidateSearch = () => {
   const [allUserInfo, setUserInfo] = useState<ICandidate[]>([] as ICandidate[]);
   const [currentUser, setCurrentUser] = useState<ICandidate>({} as ICandidate);
   const [dropUser, setDropUser] = useState(true);
-  const [loadingCandidates, setLoadingCandidates] = useState<boolean>(false);
+  const [loadingCandidates, setLoadingCandidates] = useState<boolean>(true);
   const [savedCandidates, setSavedCandidates] = useState<ICandidate[]>(
     () => JSON.parse(localStorage.getItem('savedCandidates') ?? '[]')
   )

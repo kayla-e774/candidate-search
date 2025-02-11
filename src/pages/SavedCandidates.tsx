@@ -44,7 +44,7 @@ const SavedCandidates = () => {
               </thead>
               <tbody>
                 { savedCandidates.map((candidate) => (
-                  <tr key={candidate}>
+                  <tr>
                     <td className="align-middle align-items-center justify-content-center text-center">
                       <img className="img-thumbnail img-fluid" src={candidate.avatarUrl}></img>
                     </td>
